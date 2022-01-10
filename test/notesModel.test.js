@@ -12,4 +12,9 @@ describe("Notes App Class", () => {
     expect(model.getNotes().length).toBe(2);
     expect(model.getNotes()).toEqual(["Buy milk", "Go to the gym"]);
   });
+
+  it("empties the notes array", () => {
+    model.reset();
+    expect(model.getNotes()).toEqual([]);
+  });
 });
