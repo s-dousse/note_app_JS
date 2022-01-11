@@ -10,8 +10,8 @@ const model = new NotesModel();
 console.log(model.getNotes());
 const view = new NotesView(model);
 
-model.addNote("buy milk");
-model.addNote("go to gym");
+// model.addNote("buy milk");
+// model.addNote("go to gym");
 console.log(model.getNotes());
 
 // view behaviour

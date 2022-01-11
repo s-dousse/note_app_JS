@@ -7,19 +7,24 @@ const NotesView = require("../notesView");
 const NotesModel = require("../notesModel");
 
 describe("NotesView class", () => {
-  it("can display 2 paragraphes", () => {
+  it("can adds 1 note", () => {
     document.body.innerHTML = fs.readFileSync("./index.html");
-    // dependency injection + double the notesModel class
-    // let notesModelDouble = { getNotes: ["buy milk", "go to gym"] };
+
     const model = new NotesModel();
     const view = new NotesView(model);
-    model.addNote("buy milk");
-    model.addNote("buy milk");
 
-    // test the behaviour
-    view.displayNotes();
+    // fill in input field
+    const inputEl = document.querySelector("#note-input");
+    inputEl.value = "buy milk";
 
-    // check if the paragraphes are displayed
-    expect(document.querySelectorAll("div.note").length).toEqual(2);
+    // submit input value
+    const addNoteBTN = document.querySelector("#add-note-btn");
+    addNoteBTN.click();
+
+    // check if the note is displayed
+    expect(document.querySelectorAll("div.note").l1ngth).toEqual(2);
+    expect(document.querySelectorAll("div.note")[0].innerText).toEqual(
+      "buy milk"
+    );
   });
 });

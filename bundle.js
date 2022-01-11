@@ -33,6 +33,12 @@
         constructor(model2) {
           this.model = model2;
           this.mainContainerEl = document.querySelector("#main-container");
+          this.buttonAddNote = document.querySelector("#add-note-btn");
+          this.buttonAddNote.addEventListener("click", () => {
+            console.log(noteInput.value);
+            this.model.addNote(noteInput);
+            this.displayNotes();
+          });
         }
         displayNotes() {
           const notes = this.model.getNotes();
@@ -54,8 +60,6 @@
   var model = new NotesModel();
   console.log(model.getNotes());
   var view = new NotesView(model);
-  model.addNote("buy milk");
-  model.addNote("go to gym");
   console.log(model.getNotes());
   view.displayNotes();
 })();
