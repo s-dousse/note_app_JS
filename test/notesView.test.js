@@ -22,7 +22,7 @@ describe("NotesView class", () => {
     addNoteBTN.click();
 
     // check if the note is displayed
-    expect(document.querySelectorAll("div.note").l1ngth).toEqual(2);
+    expect(document.querySelectorAll("div.note").length).toEqual(1);
     expect(document.querySelectorAll("div.note")[0].innerText).toEqual(
       "buy milk"
     );
