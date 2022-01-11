@@ -18,3 +18,4 @@ describe("Notes App Class", () => {
     expect(model.getNotes()).toEqual([]);
   });
 });
+ 

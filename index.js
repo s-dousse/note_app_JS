@@ -5,6 +5,5 @@ const NotesModel = require("./notesModel");
 //
 // on Mac (using Chrome), use Option+Command+J to open the console and see this message.
 
-notes = new NotesModel();
-console.log(notes.getNotes());
-console.log("Hello from the developer console!");
+model = new NotesModel();
+console.log(model.getNotes());
