@@ -1,19 +1,20 @@
+const NotesModel = require("./notesModel");
+
 class NotesView {
   constructor(model) {
     this.model = model;
+    this.mainContainerEl = document.querySelector("#main-container");
   }
 
   displayNotes() {
-    this.model.getNotes().forEach((note) => {
-      const mainContainerEl = document.querySelector("#main-container");
-      console.log(note);
+    const notes = this.model.getNotes();
 
-      let newDiv = document.createElement("div");
-      newDiv.classList.add("note");
-      console.log("new div added");
-      newDiv.append(note);
+    notes.forEach((note) => {
+      let noteEl = document.createElement("div");
+      noteEl.innerText = note;
+      noteEl.className = "note";
 
-      mainContainerEl.append(newDiv);
+      this.mainContainerEl.append(noteEl);
     });
   }
 }

@@ -28,19 +28,19 @@
   // notesView.js
   var require_notesView = __commonJS({
     "notesView.js"(exports, module) {
+      var NotesModel2 = require_notesModel();
       var NotesView2 = class {
         constructor(model2) {
           this.model = model2;
+          this.mainContainerEl = document.querySelector("#main-container");
         }
         displayNotes() {
-          this.model.getNotes().forEach((note) => {
-            const mainContainerEl = document.querySelector("#main-container");
-            console.log(note);
-            let newDiv = document.createElement("div");
-            newDiv.classList.add("note");
-            console.log("new div added");
-            newDiv.append(note);
-            mainContainerEl.append(newDiv);
+          const notes = this.model.getNotes();
+          notes.forEach((note) => {
+            let noteEl = document.createElement("div");
+            noteEl.innerText = note;
+            noteEl.className = "note";
+            this.mainContainerEl.append(noteEl);
           });
         }
       };
