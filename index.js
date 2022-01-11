@@ -7,12 +7,12 @@ const NotesView = require("./notesView");
 // on Mac (using Chrome), use Option+Command+J to open the console and see this message.
 
 const model = new NotesModel();
-console.log(model.getNotes());
+// console.log(model.getNotes());
 const view = new NotesView(model);
 
-// model.addNote("buy milk");
-// model.addNote("go to gym");
-console.log(model.getNotes());
+// // model.addNote("buy milk");
+// // model.addNote("go to gym");
+// console.log(model.getNotes());
 
-// view behaviour
-view.displayNotes();
+// // view behaviour
+// view.displayNotes();

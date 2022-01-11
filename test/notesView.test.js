@@ -27,4 +27,33 @@ describe("NotesView class", () => {
       "buy milk"
     );
   });
+
+  it("refresh the notes when the user submits a new note", () => {
+    document.body.innerHTML = fs.readFileSync("./index.html");
+
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    // add first note
+    const inputEl = document.querySelector("#note-input");
+    inputEl.value = "buy milk";
+
+    // submit input value
+    const addNoteBTN = document.querySelector("#add-note-btn");
+    addNoteBTN.click();
+
+    // add second note
+    inputEl.value = "go to gym";
+
+    // submit input value
+    addNoteBTN.click();
+
+    expect(document.querySelectorAll("div.note").length).toEqual(2);
+    expect(document.querySelectorAll("div.note")[0].innerText).toEqual(
+      "buy milk"
+    );
+    expect(document.querySelectorAll("div.note")[1].innerText).toEqual(
+      "go to gym"
+    );
+  });
 });

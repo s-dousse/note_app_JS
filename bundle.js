@@ -36,12 +36,22 @@
           this.buttonAddNote = document.querySelector("#add-note-btn");
           this.buttonAddNote.addEventListener("click", () => {
             const noteInput = document.querySelector("#note-input").value;
-            console.log(noteInput);
-            this.model.addNote(noteInput);
-            this.displayNotes();
+            this.addNewNote(noteInput);
+            document.querySelector("#note-input").value = "";
+          });
+        }
+        addNewNote(note) {
+          this.model.addNote(note);
+          this.displayNotes();
+        }
+        refreshDisplay() {
+          let allDisplayedNotes = document.querySelectorAll(".note");
+          allDisplayedNotes.forEach((noteDiv) => {
+            noteDiv.remove();
           });
         }
         displayNotes() {
+          this.refreshDisplay();
           const notes = this.model.getNotes();
           notes.forEach((note) => {
             let noteEl = document.createElement("div");
@@ -59,8 +69,5 @@
   var NotesModel = require_notesModel();
   var NotesView = require_notesView();
   var model = new NotesModel();
-  console.log(model.getNotes());
   var view = new NotesView(model);
-  console.log(model.getNotes());
-  view.displayNotes();
 })();
