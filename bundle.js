@@ -14,6 +14,9 @@
         getNotes() {
           return this.notes;
         }
+        setNotes(notes) {
+          this.notes = notes;
+        }
         addNote(note) {
           this.notes.push(note);
         }
@@ -30,8 +33,9 @@
     "notesView.js"(exports, module) {
       var NotesModel2 = require_notesModel();
       var NotesView2 = class {
-        constructor(model2) {
+        constructor(model2, api2) {
           this.model = model2;
+          this.api = api2;
           this.mainContainerEl = document.querySelector("#main-container");
           this.buttonAddNote = document.querySelector("#add-note-btn");
           this.buttonAddNote.addEventListener("click", () => {
@@ -65,9 +69,27 @@
     }
   });
 
+  // notesApi.js
+  var require_notesApi = __commonJS({
+    "notesApi.js"(exports, module) {
+      var NotesApi2 = class {
+        loadNotes(callback) {
+          fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => callback(data));
+        }
+      };
+      module.exports = NotesApi2;
+    }
+  });
+
   // index.js
   var NotesModel = require_notesModel();
   var NotesView = require_notesView();
+  var NotesApi = require_notesApi();
   var model = new NotesModel();
-  var view = new NotesView(model);
+  var api = new NotesApi();
+  var view = new NotesView(model, api);
+  api.loadNotes((notes) => {
+    model.setNotes(notes);
+    view.displayNotes();
+  });
 })();
