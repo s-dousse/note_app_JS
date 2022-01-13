@@ -39,6 +39,7 @@
           this.mainContainerEl = document.querySelector("#main-container");
           this.resetButton = document.querySelector("#reset-button");
           this.buttonAddNote = document.querySelector("#add-note-btn");
+          this.emojiButton = document.querySelector("#add-emoji-btn");
           this.buttonAddNote.addEventListener("click", () => {
             const noteInput = document.querySelector("#note-input").value;
             this.api.createNote(noteInput, (notes) => {
@@ -51,6 +52,16 @@
             this.api.resetNotes((notes) => {
               this.model.setNotes(notes);
               this.displayNotes();
+            });
+          });
+          this.emojiButton.addEventListener("click", () => {
+            const noteInput = document.querySelector("#note-input").value;
+            this.api.filterEmoji(noteInput, (data) => {
+              const textNote = data.emojified_text;
+              this.api.createNote(textNote, (notes) => {
+                this.model.setNotes(notes);
+                this.displayNotes();
+              });
             });
           });
         }
@@ -81,6 +92,16 @@
       var NotesApi2 = class {
         loadNotes(callback) {
           fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => callback(data));
+        }
+        filterEmoji(noteText, callback) {
+          const dynamicNote = { text: noteText };
+          fetch("https://makers-emojify.herokuapp.com/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dynamicNote)
+          }).then((response) => response.json()).then((data) => callback(data));
         }
         createNote(newNote, callback) {
           const note = { content: newNote };

@@ -7,23 +7,36 @@ class NotesView {
     this.mainContainerEl = document.querySelector("#main-container");
     this.resetButton = document.querySelector("#reset-button");
     this.buttonAddNote = document.querySelector("#add-note-btn");
+    this.emojiButton = document.querySelector("#add-emoji-btn");
 
     this.buttonAddNote.addEventListener("click", () => {
       const noteInput = document.querySelector("#note-input").value;
       // this.addNewNote(noteInput);
       this.api.createNote(noteInput, (notes) => {
-        this.model.setNotes(notes)
-        this.displayNotes()
-      })
+        this.model.setNotes(notes);
+        this.displayNotes();
+      });
       document.querySelector("#note-input").value = ""; // clear input field value
     });
-    
-    this.resetButton.addEventListener('click', () => {
+
+    this.resetButton.addEventListener("click", () => {
       this.api.resetNotes((notes) => {
         this.model.setNotes(notes);
         this.displayNotes();
-      })
-    })
+      });
+    });
+
+    this.emojiButton.addEventListener("click", () => {
+      const noteInput = document.querySelector("#note-input").value;
+      this.api.filterEmoji(noteInput, (data) => {
+        const textNote = data.emojified_text;
+        this.api.createNote(textNote, (notes) => {
+          this.model.setNotes(notes);
+          this.displayNotes();
+        });
+      });
+      // this.api.createNote(noteInput, (notes))
+    });
   }
 
   // addNewNote(note) {
