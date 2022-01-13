@@ -1,5 +1,3 @@
-const nodeType = require("jsdom/lib/jsdom/living/node-type");
-
 class NotesApi {
   loadNotes(callback) {
     fetch("http://localhost:3000/notes")
@@ -7,16 +5,18 @@ class NotesApi {
       .then((data) => callback(data));
   }
 
-  createNote(note) {
+  createNote(newNote, callback) {
+    const note = { content: newNote }
+
     fetch("http://localhost:3000/notes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: { content: JSON.stringify(note) },
-    });
-    // .then((response) => response.json())
-    // .then((data) => callback(data));
+      body: JSON.stringify(note),
+    })
+    .then((response) => response.json())
+    .then((data) => callback(data));
   }
 }
 

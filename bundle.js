@@ -45,6 +45,7 @@
           });
         }
         addNewNote(note) {
+          this.api.createNote(note);
           this.model.addNote(note);
           this.displayNotes();
         }
@@ -75,6 +76,16 @@
       var NotesApi2 = class {
         loadNotes(callback) {
           fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => callback(data));
+        }
+        createNote(newNote, callback) {
+          const note = { content: newNote };
+          fetch("http://localhost:3000/notes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(note)
+          }).then((response) => response.json()).then((data) => callback(data));
         }
       };
       module.exports = NotesApi2;
