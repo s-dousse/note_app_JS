@@ -28,4 +28,19 @@ describe("NotesApi", () => {
       expect(data.notes[1]).toBe("Another Note");
     });
   });
+
+  it("reset notes to empty list", async () => {
+    const api = new NotesApi();
+
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        notes: [],
+      })
+    );
+
+    api.resetNotes((data) => {
+      expect(data.notes).toEqual([]);
+    });
+  });
+
 });

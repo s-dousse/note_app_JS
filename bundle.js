@@ -37,17 +37,22 @@
           this.model = model2;
           this.api = api2;
           this.mainContainerEl = document.querySelector("#main-container");
+          this.resetButton = document.querySelector("#reset-button");
           this.buttonAddNote = document.querySelector("#add-note-btn");
           this.buttonAddNote.addEventListener("click", () => {
             const noteInput = document.querySelector("#note-input").value;
-            this.addNewNote(noteInput);
+            this.api.createNote(noteInput, (notes) => {
+              this.model.setNotes(notes);
+              this.displayNotes();
+            });
             document.querySelector("#note-input").value = "";
           });
-        }
-        addNewNote(note) {
-          this.api.createNote(note);
-          this.model.addNote(note);
-          this.displayNotes();
+          this.resetButton.addEventListener("click", () => {
+            this.api.resetNotes((notes) => {
+              this.model.setNotes(notes);
+              this.displayNotes();
+            });
+          });
         }
         refreshDisplay() {
           let allDisplayedNotes = document.querySelectorAll(".note");
@@ -86,6 +91,9 @@
             },
             body: JSON.stringify(note)
           }).then((response) => response.json()).then((data) => callback(data));
+        }
+        resetNotes(callback) {
+          fetch("http://localhost:3000/notes", { method: "DELETE" }).then((response) => response.json()).then((data) => callback(data));
         }
       };
       module.exports = NotesApi2;
